@@ -26,7 +26,7 @@ resource "aws_vpc" "tp_vpc" {
   }
 }
 
-
+# --- creates the public subnet for the aws network --- #
 
 resource "aws_subnet" "tp_public_subnet" {
   count                   = var.public_sn_count
@@ -40,6 +40,8 @@ resource "aws_subnet" "tp_public_subnet" {
   }
 }
 
+# --- creates the private subnet for the aws network --- #
+
 resource "aws_subnet" "tp_private_subnet" {
   count                   = var.private_sn_count
   vpc_id                  = aws_vpc.tp_vpc.id
@@ -52,12 +54,15 @@ resource "aws_subnet" "tp_private_subnet" {
   }
 }
 
+# --- creating route table for the VPC --- #
+
 resource "aws_route_table_association" "tp_public_assoc" {
   count          = var.public_sn_count
   subnet_id      = aws_subnet.tp_public_subnet.*.id[count.index]
   route_table_id = aws_route_table.tp_public_rt.id
 }
 
+# --- creating gateway so that it can access the outside internet --- #
 
 resource "aws_internet_gateway" "tp_internet_gateway" {
   vpc_id = aws_vpc.tp_vpc.id
@@ -90,6 +95,8 @@ resource "aws_default_route_table" "tp_private_rt" {
     Name = "tp_private"
   }
 }
+
+# --- creating security group to filter services --- #
 
 resource "aws_security_group" "tp_sg" {
   for_each    = var.security_groups
