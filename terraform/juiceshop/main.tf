@@ -16,7 +16,7 @@ resource "aws_key_pair" "tp_auth" {
   public_key = file(var.public_key_path)
 }
 
-# --- creates the instances in aws --- $
+# --- creates the juiceshop instance in aws --- $
 
 resource "aws_instance" "tp_node" {
   count                  = var.instance_count
