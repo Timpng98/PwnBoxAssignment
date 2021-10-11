@@ -9,10 +9,14 @@ resource "random_id" "tp_node_id" {
   }
 }
 
+# --- createes key pair to ssh into the instances created --- #
+
 resource "aws_key_pair" "tp_auth" {
   key_name   = var.key_name
   public_key = file(var.public_key_path)
 }
+
+# --- creates the instances in aws --- $
 
 resource "aws_instance" "tp_node" {
   count                  = var.instance_count
