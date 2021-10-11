@@ -12,7 +12,8 @@ module "network" {
   private_cidrs    = [for i in range(1, 255, 2) : cidrsubnet(local.vpc_cidr, 8, i)]
 }
 
-
+# --- pulls juiceshop from the juiceshop folder --- #
+    
 module "juiceshop" {
   source          = "./juiceshop"
   instance_count  = "1"
@@ -26,6 +27,8 @@ module "juiceshop" {
   # user_data_path  = "${path.root}/userdata.tpl"
 }
 
+# --- pulls linux ubuntu from the linux folder --- #
+    
 module "linux" {
   source          = "./linux"
   instance_count  = "1"
@@ -39,6 +42,8 @@ module "linux" {
   # user_data_path  = "${path.root}/userdata.tpl
 }
 
+# --- pulls windows vulnerable server from the win folder --- #
+    
 module "win" {
   source          = "./win"
   instance_count  = "1"
