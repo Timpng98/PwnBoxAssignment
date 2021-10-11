@@ -1,3 +1,5 @@
+# --- display's the private subnets to be able to ssh into each instance --- #
+
 output "juiceshop_ip" {
   value = "ssh ec2-user@${module.juiceshop.juiceshop_ip}"
 }
